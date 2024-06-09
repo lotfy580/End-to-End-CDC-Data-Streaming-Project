@@ -9,6 +9,6 @@
     "database.password": "lotfy123",
     "database.dbname": "test_db",
     "database.server.name": "postgres",
-    "table.include.list": "public.test"
+    "table.include.list": "public.sales"
   }
 }
