@@ -25,11 +25,11 @@ class KafkaSparkStream:
             conf.setAll(self.spark_configs)
             spark=(SparkSession.builder.appName('kafka_spark_stream').config(conf=conf).getOrCreate())
             
-            print("********************Session Started*********************")
-            
+            print(">>>>>>>>>>>>>>[Session Started]<<<<<<<<<<<<<<<<<")
+            return spark
         except Exception as e:
-            print(f"********************ERROR [Starting Session]:{e}*********************")
-        return spark
+            print(f">>>>>>>>>>>>>> ERROR [Starting Session]:{e}<<<<<<<<<<<<<<<<<")
+            return None
     
     
     
@@ -40,15 +40,15 @@ class KafkaSparkStream:
                 .format("kafka")
                 .option('kafka.bootstrap.servers', 'kafka:9092')
                 .option('subscribe', 'sales.public.sales')
-                .option('startingOffsets', 'latest')
+                .option('endingOffsets', 'latest')
                 .load()
                 )
             
-            print("********************data loaded*********************")
-            
+            print(">>>>>>>>>>>>>>[Data Loaded]<<<<<<<<<<<<<<<<<")
+            return kafka_df
         except Exception as e:
-            print(f"********************ERROR [reading from Kafka]:{e}*********************")
-        return kafka_df
+            print(f">>>>>>>>>>>>>> ERROR [reading from Kafka]:{e}<<<<<<<<<<<<<<<<<")
+            return None
     
     
     
@@ -98,12 +98,12 @@ class KafkaSparkStream:
                 .withColumn('create_date', current_timestamp())
             )
         
-            print("********************[Data Transformed]*********************")
-            
+            print(">>>>>>>>>>>>>>[Data Transformed]<<<<<<<<<<<<<<<<<")
+            return df_tranformed
         except Exception as e:
-            print(f"********************ERROR [Data Transformation]:{e}*********************")
-            
-        return df_tranformed
+            print(f">>>>>>>>>>>>>> ERROR [Data Transformation]:{e}<<<<<<<<<<<<<<<<<")
+            return None
+        
     
     
     
@@ -117,10 +117,10 @@ class KafkaSparkStream:
             .start()\
             .awaitTermination()
         
-            print("********************data inserted*********************")
-        
+            print(">>>>>>>>>>>>>>[Data Inserted]*********************")
+            
         except Exception as e:
-            print(f"********************ERROT [Cassandra Insertion]:{e}*********************")
+            print(f">>>>>>>>>>>>>> ERROR [Cassandra Insertion]:{e}<<<<<<<<<<<<<<<<<")
         
             
     def start(self):
